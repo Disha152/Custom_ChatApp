@@ -1,18 +1,20 @@
+import 'package:chat_application/components/custom_button.dart';
 import 'package:chat_application/components/custom_textfield.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key,required this.onTap});
 
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
+  final void Function() onTap;
 
-class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
+    void login() {
+      //authentication
+    }
+
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         body: Column(
@@ -49,9 +51,33 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: true,
                 controller: passwordController),
 
+            const SizedBox(height: 30),
             //login button
+            CustomButton(
+              text: "Login",
+              onTap: login,
+            ),
 
             //register now
+            const SizedBox(height: 8),
+
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text("Don't have an account ?",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Theme.of(context).colorScheme.primary,
+                  )),
+               TextButton(
+                  onPressed: () {
+                    onTap();
+                  },
+                  child: const Text("Register",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.blue,
+                      )),
+                ),
+            ]),
           ],
         ));
   }
