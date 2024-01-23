@@ -13,26 +13,25 @@ class RegisterPage extends StatelessWidget {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     TextEditingController confirmpasswordController = TextEditingController();
-   
-   void register(BuildContext context) async {
-  //authentication
-  final authService = AuthService();
-  //try register
-  if (passwordController.text == confirmpasswordController.text) {
-    try {
-      await authService.signUpWithEmailPassword(
-          emailController.text, passwordController.text);
-    } catch (e) {
-      //show error message
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.toString())));
-    }
-  } else {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text("Password does not match")));
-  }
-}
 
+    void register(BuildContext context) async {
+      //authentication
+      final authService = AuthService();
+      //try register
+      if (passwordController.text == confirmpasswordController.text) {
+        try {
+          await authService.signUpWithEmailPassword(
+              emailController.text, passwordController.text);
+        } catch (e) {
+          //show error message
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(e.toString())));
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Password does not match")));
+      }
+    }
 
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
@@ -82,9 +81,11 @@ class RegisterPage extends StatelessWidget {
             const SizedBox(height: 25),
             //login button
             CustomButton(
-              text: "Register",
-              onTap: () => register(context),
-            ),
+                text: "Register",
+                onTap: () => {
+                      register(context),
+                
+                    }),
 
             //register now
             const SizedBox(height: 8),
