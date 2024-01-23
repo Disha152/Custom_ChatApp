@@ -1,6 +1,7 @@
 import 'package:chat_application/auth/auth_service.dart';
 import 'package:chat_application/components/custom_button.dart';
 import 'package:chat_application/components/custom_textfield.dart';
+import 'package:chat_application/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -21,6 +22,10 @@ class LoginPage extends StatelessWidget {
         await authService.signInWithEmailPassword(
             emailController.text, passwordController.text
         );
+         Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+          );
       }catch(e){
         //show error message
         ScaffoldMessenger.of(context).showSnackBar(

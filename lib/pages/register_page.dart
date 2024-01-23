@@ -1,6 +1,7 @@
 import 'package:chat_application/auth/auth_service.dart';
 import 'package:chat_application/components/custom_button.dart';
 import 'package:chat_application/components/custom_textfield.dart';
+import 'package:chat_application/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -22,6 +23,12 @@ class RegisterPage extends StatelessWidget {
         try {
           await authService.signUpWithEmailPassword(
               emailController.text, passwordController.text);
+
+          // navigate to the home page
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+          );
         } catch (e) {
           //show error message
           ScaffoldMessenger.of(context)
@@ -81,11 +88,11 @@ class RegisterPage extends StatelessWidget {
             const SizedBox(height: 25),
             //login button
             CustomButton(
-                text: "Register",
-                onTap: () => {
-                      register(context),
-                
-                    }),
+              text: "Register",
+              onTap: () {
+                register(context);
+              },
+            ),
 
             //register now
             const SizedBox(height: 8),

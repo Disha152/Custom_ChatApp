@@ -1,5 +1,5 @@
 import 'package:chat_application/auth/auth_service.dart';
-import 'package:chat_application/chat/chat_service.dart';
+import 'package:chat_application/services/chat/chat_service.dart';
 import 'package:chat_application/components/custom_drawer.dart';
 import 'package:chat_application/components/user_tile.dart';
 import 'package:chat_application/pages/chat_page.dart';
@@ -20,21 +20,20 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Home"),
-        actions: [
-          IconButton(
-            // Logout button
-            icon: const Icon(Icons.logout),
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-            },
-          ),
-        ],
-      ),
-      drawer: const CustomDrawer(),
-      body: _buildUserList()
-    );
+        appBar: AppBar(
+          title: const Text("Home"),
+          actions: [
+            IconButton(
+              // Logout button
+              icon: const Icon(Icons.logout),
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+              },
+            ),
+          ],
+        ),
+        drawer: const CustomDrawer(),
+        body: _buildUserList());
   }
 
   // Build a list of users except for the current logged-in user
@@ -65,15 +64,23 @@ class HomePage extends StatelessWidget {
   Widget _buildUserListItem(
       Map<String, dynamic> userData, BuildContext context) {
     // Display all users except the current user
-    return UserTile(
-      text: userData["email"],
-      onTap: () {
-        // Tapped on a user -> go to chat page
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ChatPage(receiveEmail: userData["email"],)),
-        );
-      },
-    );
+    if (userData["email"] != _authService.getCurrentUser()!.email) {
+      return UserTile(
+        text: userData["email"],
+        onTap: () {
+          // Tapped on a user -> go to chat page
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    ChatPage(receiveEmail: userData["email"],
+                    receiverID: userData["uid"])),
+          );
+        },
+      );
+    } else
+      return Container();
+
+    // Return null when the condition is false
   }
 }
