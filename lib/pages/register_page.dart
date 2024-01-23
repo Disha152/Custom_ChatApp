@@ -1,9 +1,10 @@
+import 'package:chat_application/auth/auth_service.dart';
 import 'package:chat_application/components/custom_button.dart';
 import 'package:chat_application/components/custom_textfield.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key,required this.onTap});
+  const RegisterPage({super.key, required this.onTap});
 
   final void Function() onTap;
 
@@ -12,9 +13,27 @@ class RegisterPage extends StatelessWidget {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     TextEditingController confirmpasswordController = TextEditingController();
-    void register() {
-      //authentication
+   
+   void register(BuildContext context) async {
+  //authentication
+  final authService = AuthService();
+  //try register
+  if (passwordController.text == confirmpasswordController.text) {
+    try {
+      await authService.signUpWithEmailPassword(
+          emailController.text, passwordController.text);
+    } catch (e) {
+      //show error message
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
     }
+  } else {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text("Password does not match")));
+  }
+}
+
+
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         body: Column(
@@ -64,7 +83,7 @@ class RegisterPage extends StatelessWidget {
             //login button
             CustomButton(
               text: "Register",
-              onTap: register,
+              onTap: () => register(context),
             ),
 
             //register now

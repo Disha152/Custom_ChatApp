@@ -1,9 +1,11 @@
+import 'package:chat_application/auth/auth_service.dart';
 import 'package:chat_application/components/custom_button.dart';
 import 'package:chat_application/components/custom_textfield.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key,required this.onTap});
+  const LoginPage({Key? key, required this.onTap}) : super(key: key);
+
 
   final void Function() onTap;
 
@@ -11,8 +13,20 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
-    void login() {
+    void login(BuildContext context) async {
       //authentication
+      final authService = AuthService();
+      //try login
+      try{
+        await authService.signInWithEmailPassword(
+            emailController.text, passwordController.text
+        );
+      }catch(e){
+        //show error message
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(e.toString()))
+        );
+      }
     }
 
     return Scaffold(
@@ -55,7 +69,7 @@ class LoginPage extends StatelessWidget {
             //login button
             CustomButton(
               text: "Login",
-              onTap: login,
+              onTap:()=> login(context),
             ),
 
             //register now
@@ -67,16 +81,16 @@ class LoginPage extends StatelessWidget {
                     fontSize: 16,
                     color: Theme.of(context).colorScheme.primary,
                   )),
-               TextButton(
-                  onPressed: () {
-                    onTap();
-                  },
-                  child: const Text("Register",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.blue,
-                      )),
-                ),
+              TextButton(
+                onPressed: () {
+                  onTap();
+                },
+                child: const Text("Register",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.blue,
+                    )),
+              ),
             ]),
           ],
         ));
