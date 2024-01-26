@@ -5,10 +5,10 @@ import 'package:chat_application/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key, required this.onTap}) : super(key: key);
+  const LoginPage({Key? key, this.onTap}) : super(key: key);
 
 
-  final void Function() onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -86,16 +86,17 @@ class LoginPage extends StatelessWidget {
                     fontSize: 16,
                     color: Theme.of(context).colorScheme.primary,
                   )),
-              TextButton(
-                onPressed: () {
-                  onTap();
-                },
-                child: const Text("Register",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.blue,
-                    )),
+            
+            InkWell(
+              onTap: onTap,
+              child: const Text(
+                'Go to Register Page',
+                style: TextStyle(
+                  color: Colors.blue, // You can customize the text color
+                  
+                ),
               ),
+            ),
             ]),
           ],
         ));

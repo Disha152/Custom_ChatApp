@@ -96,7 +96,7 @@ class ChatPage extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 data["message"],
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
             ),
           ),

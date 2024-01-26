@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({Key? key});
+  HomePage({super.key});
 
   final ChatService _chatService = ChatService();
   final AuthService _authService = AuthService();
@@ -78,8 +78,9 @@ class HomePage extends StatelessWidget {
           );
         },
       );
-    } else
+    } else {
       return Container();
+    }
 
     // Return null when the condition is false
   }

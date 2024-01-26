@@ -6,6 +6,14 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+   //signout
+ Future<void> signOut() async {
+    try {
+      await _auth.signOut();
+    } catch (e) {
+      print("Error during sign out: $e");
+    }
+  }
   //get current user
   User? getCurrentUser() {
     return _auth.currentUser;
@@ -27,10 +35,7 @@ class AuthService {
     }
   }
 
-  //signout
-  Future<void> signOut() async {
-    return await _auth.signOut();
-  }
+ 
 
   // signup
   Future<UserCredential> signUpWithEmailPassword(String email, password) async {

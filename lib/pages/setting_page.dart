@@ -10,7 +10,7 @@ class SettingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("S E T T I N G S"),
+        title: const Text("S E T T I N G S"),
       ),
       body: Container(
           decoration: BoxDecoration(

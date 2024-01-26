@@ -1,6 +1,5 @@
 import 'package:chat_application/auth/login_or_auth.dart';
 
-import 'package:chat_application/themes/light_mode.dart';
 import 'package:chat_application/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -15,9 +14,11 @@ void main() async {
   runApp(
     ChangeNotifierProvider(
       create: (context) => ThemeProvider(),
+      child: const MyApp(),
     ),
   );
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
